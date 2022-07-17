@@ -5,8 +5,9 @@ public class GameManager : MonoBehaviour
 {
     public Player player;
     public Text scoreText;
-    public GameObject playButton;
     public GameObject gameOver;
+    public GameObject playButton;
+    public GameObject menuButton;
     public int score;
 
     private void Awake()
@@ -20,11 +21,13 @@ public class GameManager : MonoBehaviour
         score = 0;
         scoreText.text = score.ToString();
 
-        playButton.SetActive(false);
         gameOver.SetActive(false);
+        playButton.SetActive(false);
+        menuButton.SetActive(false);
 
         Time.timeScale = 1f;
         player.enabled = true;
+        AudioListener.pause = false;
         
         Pipes[] pipes = FindObjectsOfType<Pipes>();
 
@@ -38,6 +41,7 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 0f;
         player.enabled = false;
+        AudioListener.pause = true;
     }
 
     public void IncreaseScore()
@@ -50,7 +54,13 @@ public class GameManager : MonoBehaviour
     {
         gameOver.SetActive(true);
         playButton.SetActive(true);
+        menuButton.SetActive(true);
 
         Pause();
+    }
+
+    public void MenuAudio()
+    {
+        AudioListener.pause = false;
     }
 }
